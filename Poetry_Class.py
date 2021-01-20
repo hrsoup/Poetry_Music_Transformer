@@ -42,7 +42,10 @@ class POEMS:
         index = np.random.randint(0, len(poemsVector))
         one_poem = poemsVector[index]
         temp = np.full(maxLength, self.wordToID[" "], np.int32) # padding space
-        temp[:len(one_poem)] = one_poem
+        if maxLength >= len(one_poem):
+            temp[:len(one_poem)] = one_poem
+        else:
+            temp[:len(one_poem)] = one_poem[:maxLength]
         temp2 = np.copy(temp) 
         temp2[:-1] = temp[1:]
         return temp, temp2

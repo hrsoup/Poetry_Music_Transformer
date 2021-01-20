@@ -8,7 +8,7 @@ NoteOnOffset = IntervalDim + VelocityDim
 NoteOffOffset = IntervalDim + VelocityDim + NoteOnDim
 EventDim = IntervalDim + VelocityDim + NoteOnDim + NoteOffDim # 388
 
-maxLength = Time = 520 #处理的每个sample的维度
+maxLength = Time = 100 #处理的每个sample的维度
 EmbeddingDim = 512 #把每个sample嵌入的维度
 HeadDim = 32 #头的维度
 Heads = 16 #多少个头
