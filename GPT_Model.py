@@ -147,7 +147,8 @@ def expand_tile(value, size):
     return tf.tile(tf.expand_dims(value, axis=0), [size] + [1]*ndims)
 
 def model(hparams, X, reuse=False):
-    with tf.variable_scope('transformer', reuse=reuse):
+    with tf.variable_scope('liner1', reuse=reuse):
+        # Linear
         results = {}
         batch, sequence = shape_list(X)
 
@@ -155,6 +156,7 @@ def model(hparams, X, reuse=False):
                              initializer=tf.random_normal_initializer(stddev=0.02))
         h = tf.gather(wte, X)
 
+    with tf.variable_scope('transformer', reuse=reuse):
         # Transformer
         presents = []
         for layer in range(hparams.n_layer[0]):
@@ -163,7 +165,7 @@ def model(hparams, X, reuse=False):
         results['present'] = tf.stack(presents, axis=1)
         h = norm(h, 'ln_f')
 
-    with tf.variable_scope('liner', reuse=reuse):    
+    with tf.variable_scope('liner2', reuse=reuse):    
         # Linear
         nh = h.shape[-1]
         l = mlp(norm(h, 'ln_2'), 'mlp', nh*4, hparams=hparams) 

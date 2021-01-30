@@ -7,6 +7,7 @@ VelocityOffset = IntervalDim
 NoteOnOffset = IntervalDim + VelocityDim
 NoteOffOffset = IntervalDim + VelocityDim + NoteOnDim
 EventDim = IntervalDim + VelocityDim + NoteOnDim + NoteOffDim # 388
+# EventDim = 10247
 
 maxLength = Time = 500
 EmbeddingDim = 512 #词嵌入维度
@@ -15,7 +16,7 @@ Heads = 16
 ContextDim = HeadDim * Heads # 512
 Layers = 6 #多少个decoder
 
-batch_size = batchSize = 2
+batch_size = batchSize = 1
 
 class hparams(object):
     n_vocab=EventDim,
@@ -26,7 +27,7 @@ class hparams(object):
     n_time=Time
 
 # type = 'poetry'
-type = 'random_music'
+# type = 'random_music'
 type = 'music'
 
 # mode = "pretrain"

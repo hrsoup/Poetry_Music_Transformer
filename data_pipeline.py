@@ -10,6 +10,8 @@ if type == 'music':
     data_train_dir = '../Music_dataset_after_preprocess/train'
 elif type == 'random_music':
     data_train_dir = '../Music_dataset_after_preprocess/random'
+else:
+    data_train_dir = '../Music_dataset_after_preprocess/train'
 
 data_train_files = []
 data_train_files += [join(data_train_dir, f) for f in listdir(data_train_dir) if isfile(join(data_train_dir, f)) if '.npz' in f]
