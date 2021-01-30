@@ -68,9 +68,7 @@ class POEMS:
             temp[:len(one_poem)] = one_poem[:maxLength]
         temp2 = np.copy(temp) 
         temp2[:-1] = temp[1:]
-        # max_value = self.wordToID[" "] / 2
-        # temp = np.array([item / max_value for item in temp])
-        # temp2 = np.array([item / max_value for item in temp2])
+
         return temp, temp2
 
 
@@ -114,10 +112,6 @@ def get_data(length, data_files, typ, iteration, type):
             elif d[1] == 0:
                 note = d[2] + NoteOffOffset
                 eventlist.append(note)
-            # # CC
-            # elif d[1] == 2:
-            #     event = CCOffset + d[3]
-            #     eventlist.append(event)
                 
         eventlist = np.array(eventlist).astype(np.int)
         
@@ -132,9 +126,6 @@ def get_data(length, data_files, typ, iteration, type):
             
         x = eventlist[:length]
         y = eventlist[1:length+1] #y就是x的下一步
-
-        # x = np.array([item / EventDim for item in x]) #归一化
-        # y = np.array([item / EventDim for item in y])
 
     elif type == 'poetry':
         trainData = POEMS("../Poetry_Dataset/Poetry_strains.txt")
