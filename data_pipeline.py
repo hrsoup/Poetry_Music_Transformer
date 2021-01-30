@@ -61,9 +61,9 @@ class POEMS:
             temp[:len(one_poem)] = one_poem[:maxLength]
         temp2 = np.copy(temp) 
         temp2[:-1] = temp[1:]
-        max_value = self.wordToID[" "] / 2
-        temp = np.array([item / max_value for item in temp])
-        temp2 = np.array([item / max_value for item in temp2])
+        # max_value = self.wordToID[" "] / 2
+        # temp = np.array([item / max_value for item in temp])
+        # temp2 = np.array([item / max_value for item in temp2])
         return temp, temp2
 
 
