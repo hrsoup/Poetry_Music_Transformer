@@ -146,8 +146,8 @@ def expand_tile(value, size):
     ndims = value.shape.ndims
     return tf.tile(tf.expand_dims(value, axis=0), [size] + [1]*ndims)
 
-def model(hparams, X, scope='model', reuse=False):
-    with tf.variable_scope(scope, reuse=reuse):
+def model(hparams, X, reuse=False):
+    with tf.variable_scope('transformer', reuse=reuse):
         results = {}
         batch, sequence = shape_list(X)
 
@@ -162,14 +162,16 @@ def model(hparams, X, scope='model', reuse=False):
             presents.append(present)
         results['present'] = tf.stack(presents, axis=1)
         h = norm(h, 'ln_f')
-        
+
+    with tf.variable_scope('liner', reuse=reuse):    
         # Linear
         nh = h.shape[-1]
-        l = mlp(norm(h, 'ln_2'), 'mlp', nh*8, hparams=hparams) 
+        l = mlp(norm(h, 'ln_2'), 'mlp', nh*4, hparams=hparams) 
 
         # Language model loss.  Do tokens <n predict token n?
         h_flat = tf.reshape(l, [batch*sequence, hparams.n_embd[0]])
         logits = tf.matmul(h_flat, wte, transpose_b=True)
         logits = tf.reshape(logits, [batch, sequence, hparams.n_vocab[0]])
         results['logits'] = logits
+        
         return results

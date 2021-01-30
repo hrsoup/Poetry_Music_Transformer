@@ -6,7 +6,11 @@ from os import listdir
 from os.path import isfile, join
 from config import *
 
-data_train_dir = '../Music_dataset_after_preprocess/train'
+if type == 'music':
+    data_train_dir = '../Music_dataset_after_preprocess/train'
+elif type == 'random_music':
+    data_train_dir = '../Music_dataset_after_preprocess/random'
+
 data_train_files = []
 data_train_files += [join(data_train_dir, f) for f in listdir(data_train_dir) if isfile(join(data_train_dir, f)) if '.npz' in f]
 data_train_files.sort()
@@ -15,6 +19,7 @@ data_test_dir = '../Music_dataset_after_preprocess/test'
 data_test_files = []
 data_test_files += [join(data_test_dir, f) for f in listdir(data_test_dir) if isfile(join(data_test_dir, f)) if '.npz' in f]
 data_test_files.sort()
+
 
 class POEMS:
     "poem class"
@@ -107,10 +112,10 @@ def get_data(length, data_files, typ, iteration, type):
             elif d[1] == 0:
                 note = d[2] + NoteOffOffset
                 eventlist.append(note)
-            # CC
-            elif d[1] == 2:
-                event = CCOffset + d[3]
-                eventlist.append(event)
+            # # CC
+            # elif d[1] == 2:
+            #     event = CCOffset + d[3]
+            #     eventlist.append(event)
                 
         eventlist = np.array(eventlist).astype(np.int)
         
@@ -130,7 +135,7 @@ def get_data(length, data_files, typ, iteration, type):
         # y = np.array([item / EventDim for item in y])
 
     elif type == 'poetry':
-        trainData = POEMS("../Poetry_Dataset/Poetry_para.txt")
+        trainData = POEMS("../Poetry_Dataset/Poetry_strains.txt")
         x, y = trainData.generateBatch()
     
     return x, y
