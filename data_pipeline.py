@@ -101,7 +101,7 @@ data_test_files = testData.musicVector
 
 
 def get_data(length, data_files, typ, iteration, type, EventDim):
-    if type == 'music':
+    if type == 'music' or type == 'random_music':
         if typ == 'train':
             index = np.random.randint(0, len(data_files))
         elif typ == 'test':

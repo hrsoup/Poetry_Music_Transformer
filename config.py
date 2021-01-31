@@ -25,8 +25,8 @@ class hparams(object):
     n_time=Time
 
 # type = 'poetry'
-type = 'random_music'
-# type = 'music'
+# type = 'random_music'
+type = 'music'
 
-mode = "pretrain"
-# mode = "finetune"
+# mode = "pretrain"
+mode = "finetune"
