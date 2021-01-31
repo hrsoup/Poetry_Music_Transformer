@@ -1,4 +1,3 @@
-### GPT-2 source code from https://github.com/openai/gpt-2/blob/master/src/model.py
 import tensorflow.compat.v1 as tf
 import numpy as np
 
@@ -147,8 +146,8 @@ def expand_tile(value, size):
     return tf.tile(tf.expand_dims(value, axis=0), [size] + [1]*ndims)
 
 def model(hparams, X, reuse=False):
-    with tf.variable_scope('liner1', reuse=reuse):
-        # Linear
+    with tf.variable_scope('linear1', reuse=reuse):
+        # Linear1
         results = {}
         batch, sequence = shape_list(X)
 
@@ -165,8 +164,8 @@ def model(hparams, X, reuse=False):
         results['present'] = tf.stack(presents, axis=1)
         h = norm(h, 'ln_f')
 
-    with tf.variable_scope('liner2', reuse=reuse):    
-        # Linear
+    with tf.variable_scope('linear2', reuse=reuse):    
+        # Linear2
         nh = h.shape[-1]
         l = mlp(norm(h, 'ln_2'), 'mlp', nh*4, hparams=hparams) 
 
