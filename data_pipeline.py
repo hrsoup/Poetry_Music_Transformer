@@ -5,6 +5,7 @@ import os
 from os import listdir
 from os.path import isfile, join
 from config import *
+import random
 
 class POEMS:
     "poem class"
@@ -86,19 +87,33 @@ class MUSIC:
 if type == 'music':
     trainData = MUSIC('../Music_dataset_after_preprocess/train')
     data_train_files = trainData.musicVector
+    EventDim = IntervalDim + NoteOnDim + NoteOffDim # 356
 
 elif type == 'random_music':
     trainData = MUSIC('../Music_dataset_after_preprocess/random')
     data_train_files = trainData.musicVector
+    EventDim = IntervalDim + NoteOnDim + NoteOffDim # 356
 
-elif type == 'poetry':
+elif type == 'poetry_strains':
     trainData = POEMS("../Poetry_Dataset/Poetry_strains.txt")
     data_train_files = trainData.poemVector
+    EventDim = trainData.wordNum
+
+elif type == 'poetry_paras' or type == 'random_poetry':
+    trainData = POEMS("../Poetry_Dataset/Poetry_para.txt")
+    data_train_files = trainData.poemVector
+    EventDim = trainData.wordNum
 
 testData = MUSIC('../Music_dataset_after_preprocess/test')
 data_test_files = testData.musicVector
 
-
+class hparams(object):
+    n_vocab=EventDim,
+    n_ctx=ContextDim,
+    n_embd=EmbeddingDim,
+    n_head=Heads,
+    n_layer=Layers,
+    n_time=Time
 
 def get_data(length, data_files, typ, iteration, type, EventDim):
     if type == 'music' or type == 'random_music':
@@ -123,11 +138,13 @@ def get_data(length, data_files, typ, iteration, type, EventDim):
 
         return x, y
 
-    elif type == 'poetry':
+    elif type == 'poetry_strains' or type == 'poetry_paras' or type == 'random_poetry':
         poemsVector = data_files
         index = np.random.randint(0, len(poemsVector))
         one_poem = poemsVector[index]
         temp = np.full(maxLength, EventDim - 1, np.int32) # padding space
+        if type == 'random_poetry':
+            random.shuffle(one_poem)
         if maxLength >= len(one_poem):
             temp[:len(one_poem)] = one_poem 
         else:

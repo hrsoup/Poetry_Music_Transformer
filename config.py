@@ -4,8 +4,15 @@ NoteOffDim = 128
 
 NoteOnOffset = IntervalDim
 NoteOffOffset = IntervalDim + NoteOnOffset
-EventDim = IntervalDim + NoteOnDim + NoteOffDim # 356
-# EventDim = 9833
+
+# type = 'poetry_strains'
+# type = 'poetry_paras'
+# type = 'random_poetry'
+# type = 'random_music'
+# mode = "pretrain"
+
+type = 'music'
+mode = "finetune"
 
 maxLength = Time = 100
 EmbeddingDim = 512 
@@ -15,18 +22,3 @@ ContextDim = HeadDim * Heads # 512
 Layers = 6 # how many decoders
 
 batch_size = batchSize = 64
-
-class hparams(object):
-    n_vocab=EventDim,
-    n_ctx=ContextDim,
-    n_embd=EmbeddingDim,
-    n_head=Heads,
-    n_layer=Layers,
-    n_time=Time
-
-# type = 'poetry'
-# type = 'random_music'
-type = 'music'
-
-# mode = "pretrain"
-mode = "finetune"
