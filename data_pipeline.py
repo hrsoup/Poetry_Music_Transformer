@@ -143,7 +143,7 @@ def get_data(length, data_files, typ, iteration, type, EventDim):
 
         return x, y
 
-    elif type == 'poetry_strains' or type == 'poetry_paras' or type == 'random_poetry':
+    elif type == 'poetry_strains' or type == 'poetry_paras' or type == 'random_poetry' or type == 'poetry_pattern':
         poemsVector = data_files
         index = np.random.randint(0, len(poemsVector))
         one_poem = poemsVector[index]
