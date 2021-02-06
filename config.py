@@ -6,6 +6,7 @@ NoteOnOffset = IntervalDim
 NoteOffOffset = IntervalDim + NoteOnOffset
 
 # type = 'poetry_strains'
+# type = 'poetry_pattern'
 # type = 'poetry_paras'
 # type = 'random_poetry'
 # type = 'random_music'

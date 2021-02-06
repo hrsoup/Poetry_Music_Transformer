@@ -104,6 +104,11 @@ elif type == 'poetry_paras' or type == 'random_poetry':
     data_train_files = trainData.poemVector
     EventDim = trainData.wordNum
 
+elif type == 'poetry_pattern':
+    trainData = POEMS("../Poetry_Dataset/Poetry_pattern.txt")
+    data_train_files = trainData.poemVector
+    EventDim = trainData.wordNum
+
 testData = MUSIC('../Music_dataset_after_preprocess/test')
 data_test_files = testData.musicVector
 
