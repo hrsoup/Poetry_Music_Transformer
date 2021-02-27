@@ -60,11 +60,11 @@ MEMORY EFFICIENT IMPLEMENTATION OF RELATIVE POSITION-BASED ATTENTION
 '''
 def attn(x, scope, n_state, *, hparams):
     assert x.shape.ndims == 3  # Should be [batch, sequence, features]
-    assert n_state % hparams.n_head[0] == 0
+    assert n_state % hparams.n_head== 0
 
     def split_heads(x):
         # From [batch, sequence, features] to [batch, heads, sequence, features]
-        return tf.transpose(split_states(x, hparams.n_head[0]), [0, 2, 1, 3])
+        return tf.transpose(split_states(x, hparams.n_head), [0, 2, 1, 3])
 
     def merge_heads(x):
         # Reverse of split_heads
@@ -130,13 +130,13 @@ def mlp(x, scope, n_state, *, hparams):
         return h2
 
 
-def block(x, scope, *, hparams): #一个decoder块
+def block(x, scope, *, hparams): # A decoder block
     with tf.variable_scope(scope):
         nx = x.shape[-1]
-        a, present = attn(norm(x, 'ln_1'), 'attn', nx, hparams=hparams) #Attention
-        x = x + a #残差
-        m = mlp(norm(x, 'ln_2'), 'mlp', nx*4, hparams=hparams) #前馈神经网络
-        x = x + m #残差
+        a, present = attn(norm(x, 'ln_1'), 'attn', nx, hparams=hparams) # Attention
+        x = x + a # Residual processing 
+        m = mlp(norm(x, 'ln_2'), 'mlp', nx*4, hparams=hparams) # Feed-forward
+        x = x + m # Residual processing 
         return x, present
 
 def expand_tile(value, size):
@@ -151,14 +151,14 @@ def model(hparams, X, reuse=False):
         results = {}
         batch, sequence = shape_list(X)
 
-        wte = tf.get_variable('wte', [hparams.n_vocab[0], hparams.n_embd[0]],
+        wte = tf.get_variable('wte', [hparams.n_vocab, hparams.n_embd],
                              initializer=tf.random_normal_initializer(stddev=0.02))
         h = tf.gather(wte, X)
 
     with tf.variable_scope('transformer', reuse=reuse):
         # Transformer
         presents = []
-        for layer in range(hparams.n_layer[0]):
+        for layer in range(hparams.n_layer):
             h, present = block(h, 'h%d' % layer, hparams=hparams)
             presents.append(present)
         results['present'] = tf.stack(presents, axis=1)
@@ -170,9 +170,9 @@ def model(hparams, X, reuse=False):
         l = mlp(norm(h, 'ln_2'), 'mlp', nh*4, hparams=hparams) 
 
         # Language model loss.  Do tokens <n predict token n?
-        h_flat = tf.reshape(l, [batch*sequence, hparams.n_embd[0]])
+        h_flat = tf.reshape(l, [batch*sequence, hparams.n_embd])
         logits = tf.matmul(h_flat, wte, transpose_b=True)
-        logits = tf.reshape(logits, [batch, sequence, hparams.n_vocab[0]])
+        logits = tf.reshape(logits, [batch, sequence, hparams.n_vocab])
         results['logits'] = logits
         
         return results

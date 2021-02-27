@@ -7,6 +7,14 @@ from os.path import isfile, join
 from config import *
 import random
 
+class parameters:
+    def __init__(self, EventDim, EmbeddingDim, Heads, Layers, Time):
+        self.n_vocab = EventDim
+        self.n_embd = EmbeddingDim
+        self.n_head = Heads
+        self.n_layer = Layers
+        self.n_time = Time
+
 class POEMS:
     "poem class"
     def __init__(self, filename, isEvaluate=False):
@@ -83,43 +91,6 @@ class MUSIC:
         self.musicVector = eventlists
 
 
-
-if type == 'music':
-    trainData = MUSIC('../Music_dataset_after_preprocess/train')
-    data_train_files = trainData.musicVector
-    EventDim = IntervalDim + NoteOnDim + NoteOffDim # 356
-
-elif type == 'random_music':
-    trainData = MUSIC('../Music_dataset_after_preprocess/random')
-    data_train_files = trainData.musicVector
-    EventDim = IntervalDim + NoteOnDim + NoteOffDim # 356
-
-elif type == 'poetry_strains':
-    trainData = POEMS("../Poetry_Dataset/Poetry_strains.txt")
-    data_train_files = trainData.poemVector
-    EventDim = trainData.wordNum
-
-elif type == 'poetry_paras' or type == 'random_poetry':
-    trainData = POEMS("../Poetry_Dataset/Poetry_para.txt")
-    data_train_files = trainData.poemVector
-    EventDim = trainData.wordNum
-
-elif type == 'poetry_pattern':
-    trainData = POEMS("../Poetry_Dataset/Poetry_pattern.txt")
-    data_train_files = trainData.poemVector
-    EventDim = trainData.wordNum
-
-testData = MUSIC('../Music_dataset_after_preprocess/test')
-data_test_files = testData.musicVector
-
-class hparams(object):
-    n_vocab=EventDim,
-    n_ctx=ContextDim,
-    n_embd=EmbeddingDim,
-    n_head=Heads,
-    n_layer=Layers,
-    n_time=Time
-
 def get_data(length, data_files, typ, iteration, type, EventDim):
     if type == 'music' or type == 'random_music':
         if typ == 'train':
@@ -143,7 +114,7 @@ def get_data(length, data_files, typ, iteration, type, EventDim):
 
         return x, y
 
-    elif type == 'poetry_strains' or type == 'poetry_paras' or type == 'random_poetry' or type == 'poetry_pattern':
+    elif type == 'poetry_tone' or type == 'poetry' or type == 'random_poetry' or type == 'poetry_pos':
         poemsVector = data_files
         index = np.random.randint(0, len(poemsVector))
         one_poem = poemsVector[index]

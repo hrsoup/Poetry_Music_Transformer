@@ -9,18 +9,30 @@ from config import *
 from GPT_Model import *
 from data_pipeline import *
 
+mode = "finetune"
+type = 'music'
+
 def defineArgs():
     """define args"""
-    parser = argparse.ArgumentParser(description = "Poetry_Music_Transformer")
-    parser.add_argument("-m", "--mode", 
-                        choices = ["pretrain", "finetune"])
-    parser.add_argument("-t", "--type", 
-                        choices = [ "music", "random_music",  
-                         "poetry_paras", "poetry_strains", "poetry_pattern", "random_poetry",])
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--pretrain_data", choices = ['random_poetry', 'poetry', 
+                                                    'poetry_pos', 'poetry_tone',
+                                                    'random_music', 'music'])
     return parser.parse_args()
 
 if __name__ == "__main__":
+
     args = defineArgs()
+
+    trainData = MUSIC('../Music_dataset_after_preprocess/train')
+    data_train_files = trainData.musicVector
+    EventDim = IntervalDim + NoteOnDim + NoteOffDim # 356
+
+    hparams = parameters(EventDim, EmbeddingDim, Heads, Layers, Time)
+
+    load_dir = '../Exp_' + str(exp_number) + '/' + str(args.pretrain_data)+ '_pretrain' 
+    save_dir = '../Exp_' + str(exp_number) + '/' + str(args.pretrain_data)+ '_fintune'
+    
 #------------------------------------------Draw main graph-------------------------------------#
     tf.reset_default_graph()
 
@@ -35,12 +47,9 @@ if __name__ == "__main__":
     global_step = tf.Variable(0, name='global_step')
     learning_rate = tf.Variable(1e-4, name='learning_rate')
 
-    if mode == "pretrain":
-        train_step = tf.train.AdamOptimizer(learning_rate).minimize(loss, global_step)
-    elif mode == "finetune":
-        optimizer = tf.train.AdamOptimizer(learning_rate)
-        output_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='linear1|linear2')
-        train_step = optimizer.minimize(loss, var_list=output_vars, global_step=global_step)
+    optimizer = tf.train.AdamOptimizer(learning_rate)
+    output_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='linear1|linear2')
+    train_step = optimizer.minimize(loss, var_list=output_vars, global_step=global_step)
 
     # GPU number to use
     gpu_options = tf.GPUOptions(visible_device_list="0")
@@ -54,18 +63,10 @@ if __name__ == "__main__":
 
 #--------------------------Load model if exist && TensorboardX Logger--------------------------#
 
-    if mode == "finetune":
-        load_dir = save_dir ='../' + str(type) + '_' + str(mode) + '_save_model'
-
-        # only restore paremeters of transformer
-        sess.run(tf.global_variables_initializer())
-        ref_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='transformer')
-        saver = tf.train.Saver(ref_vars)
-
-    elif mode == "pretrain":
-        load_dir = save_dir ='../' + str(type) + '_pretrain_save_model'
-
-        saver = tf.train.Saver()
+    # only restore paremeters of transformer
+    sess.run(tf.global_variables_initializer())
+    ref_vars = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, scope='transformer')
+    saver = tf.train.Saver(ref_vars)
 
     restore_file = tf.train.latest_checkpoint(load_dir)
     print(restore_file)
@@ -75,8 +76,8 @@ if __name__ == "__main__":
     else:
         print('model not exist.')
 
-    if mode == "finetune": # 存要存全部参数，但微调只恢复一部分的
-        saver = tf.train.Saver()
+    # redefine saver, save all parameters of transformer
+    saver_all = tf.train.Saver()
 
     # Logger
     from tensorboardX import SummaryWriter
@@ -119,5 +120,5 @@ if __name__ == "__main__":
                 print(str(_global_step)+'\t', str(_loss)+'\t', str(train_perplexity)+'\t')
             
             if _global_step % 100 == 0:
-                save_path = saver.save(sess, save_dir + '/checkpoint', global_step=_global_step)
+                save_path = saver_all.save(sess, save_dir + '/checkpoint', global_step=_global_step)
                 print("Model saved in path: %s" % save_path)
