@@ -41,9 +41,7 @@ python pretrain.py \
 In the above bash code, `-t` represents the data type of pretraining, `-t peotry` represents pretraining the model on the Classical Chinese poetry data. `-n` represents the number of experiment, `-n 1` represents the number of experiment is 1. After running the above bash code, pretrained models would be stored in `../Exp_1/poetry_pretrain`. All the possible options about `-t` and `-n` can be seen in the following python code:
 
 ```python
-parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 
-                                               'poetry_pos', 'poetry_tone',
-                                                'random_music', 'music'])
+parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 'poetry_pos', 'poetry_tone', 'random_music', 'music'])
 parser.add_argument("-n", "--exp_number", choices = ['0', '1', '2', '3', '4'])
 ```
 
