@@ -17,8 +17,6 @@ pip install tf_slim 1.1.0
 pip install tensorboardX 2.1
 ```
 
-## Data Preparation
-
 ## Code Layout
 
 * `pretrain.py`: Using data to pretrain the model. 
@@ -28,8 +26,20 @@ pip install tensorboardX 2.1
 * `GPT_Model.py`: Model used in this system.
 * `config.py`: Hyperparameters setting.
 
+## Data Preparation
+
 ## Usage
 
+### Pretrain
+Pretraining the model on different data. For example, if you want to pretrain the model on the original Classical Chinese poetry, you can use the following bash code:
 
+```bash
+python pretrain.py \
+  -t poetry \  
+  -n 1
+```
+### Finetune
+
+### Testing
 
 ## Results
