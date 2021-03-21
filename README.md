@@ -30,7 +30,7 @@ pip install tensorboardX 2.1
 
 ## Usage
 
-- Pretrain the model on different data. A simple run would be something like:
+- *Pretrain* the model on different data. A simple run would be something like:
 
 ```bash
 python pretrain.py \
@@ -45,7 +45,7 @@ parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 'poetr
 parser.add_argument("-n", "--exp_number", choices = ['0', '1', '2', '3', '4'])
 ```
 
-- Finetune the model on Western music data. A simple run would be something like:
+- *Finetune* the model on Western music data. A simple run would be something like:
 
 ```bash
 python fintune.py \
@@ -55,7 +55,7 @@ python fintune.py \
 
 Similar to the pretraining process, `-t` represents fintune on which pretrained model.  `-t peotry` represents fintune the model after pretraining on the Classical Chinese poetry data. `-n 1` represents the number of experiment is 1. After running the above bash code, the final models would be stored in `../Exp_1/poetry_fintune/`. All the possible options are the same as the pretraining process.
 
-- Test the model on Western music data to computer the perplexity value. A simple run would be something like:
+- *Test* the model on Western music data to computer the perplexity value. A simple run would be something like:
 
 ```bash
 python test.py \
