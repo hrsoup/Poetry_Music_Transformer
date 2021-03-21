@@ -61,6 +61,7 @@ Similar to the pretraining process, `-t` represents fintune on which pretrained 
 python test.py \
   -t poetry \  
   -n 1
+```
 
 The above bash data is used to compute the perplexity value after pretraining on the Classical Chinese poetry data, finetuning on the Western music, while the experiment number is 1. All the possible options are the same as the pretraining process.
 
