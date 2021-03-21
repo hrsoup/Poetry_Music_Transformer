@@ -38,15 +38,30 @@ python pretrain.py \
   -n 1
 ```
 
-In the above bash code, `-t` represents the data type of pretraining, `-t peotry` represents pretraining the model on the Classical Chinese poetry data. `-n` represents the number of experiment, `-n 1` represents the number of experiment is 1. After running the above bash code, pretrained models would be stored in `../Exp_1/poetry_pretrain`. All the possible options about `-t` and `-n` can be seen in the following python code:
+In the above bash code, `-t` represents the data type of pretraining, `-t peotry` represents pretraining the model on the Classical Chinese poetry data. `-n` represents the number of experiment, `-n 1` represents the number of experiment is 1. After running the above bash code, pretrained models would be stored in `../Exp_1/poetry_pretrain/`. All the possible options about `-t` and `-n` can be seen in the following python code:
 
 ```python
 parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 'poetry_pos', 'poetry_tone', 'random_music', 'music'])
 parser.add_argument("-n", "--exp_number", choices = ['0', '1', '2', '3', '4'])
 ```
 
-### Finetune
+- Finetune the model on Western music data. A simple run would be something like:
 
-### Testing
+```bash
+python fintune.py \
+  -t poetry \  
+  -n 1
+```
+
+Similar to the pretraining process, `-t` represents fintune on which pretrained model.  `-t peotry` represents fintune the model after pretraining on the Classical Chinese poetry data. `-n 1` represents the number of experiment is 1. After running the above bash code, the final models would be stored in `../Exp_1/poetry_fintune/`. All the possible options are the same as the pretraining process.
+
+- Test the model on Western music data to computer the perplexity value. A simple run would be something like:
+
+```bash
+python test.py \
+  -t poetry \  
+  -n 1
+
+The above bash data is used to compute the perplexity value after pretraining on the Classical Chinese poetry data, finetuning on the Western music, while the experiment number is 1. All the possible options are the same as the pretraining process.
 
 ## Results
