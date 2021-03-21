@@ -30,14 +30,23 @@ pip install tensorboardX 2.1
 
 ## Usage
 
-### Pretrain
-Pretraining the model on different data. For example, if you want to pretrain the model on the original Classical Chinese poetry, you can use the following bash code:
+- Pretrain the model on different data. A simple run would be something like:
 
 ```bash
 python pretrain.py \
   -t poetry \  
   -n 1
 ```
+
+In the above bash code, `-t` represents the data type of pretraining, `-t peotry` represents pretraining the model on the Classical Chinese poetry data. `-n` represents the number of experiment, `-n 1` represents the number of experiment is 1. After running the above bash code, pretrained models would be stored in `../Exp_1/poetry_pretrain`. All the possible options about `-t` and `-n` can be seen in the following python code:
+
+```python
+parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 
+                                               'poetry_pos', 'poetry_tone',
+                                                'random_music', 'music'])
+parser.add_argument("-n", "--exp_number", choices = ['0', '1', '2', '3', '4'])
+```
+
 ### Finetune
 
 ### Testing
