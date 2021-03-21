@@ -65,4 +65,10 @@ python test.py \
 
 The above bash data is used to compute the perplexity value after pretraining on the Classical Chinese poetry data, finetuning on the Western music, while the experiment number is 1. All the possible options are the same as the pretraining process.
 
+- (Optional) You can also use tensorboard to check the training. A simple run would be something like:
+```bash
+cd Exp_1
+tensorboard --logdir ./
+```
+
 ## Results
