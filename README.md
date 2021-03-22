@@ -94,8 +94,6 @@ tensorboard --logdir ./
 
 ## Results
 
-The loss curves of an experiment could be seen in the following:
+The loss curves of an experiment could be seen in the following (Green represents the baseline data, navy represents the tones data, light blue represents the pos data, and orange represents the original poetry data):
 
 ![image](Fig/exp1.png)
-
-Green represents the baseline data, navy represents the tones data, light blue represents the pos data, and orange represents the original poetry data.
