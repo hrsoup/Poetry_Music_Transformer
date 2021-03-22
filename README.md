@@ -24,13 +24,13 @@ pip install tensorboardX 2.1
 * `pretrain.py`: Using data to pretrain the model. 
 * `fintune.py`: Using data to finetune the model.
 * `test.py`: Computing perplexity values to evaluate the model.
-* `data_pipeline.py`: Building data class and preparating data.
+* `data_pipeline.py`: Building data class and preparing data.
 * `GPT_Model.py`: Model used in this system.
 * `config.py`: Hyperparameters setting.
 
 ## Data Preparation
 
-- **Poetry Dataset Preparation:** The poetry dataset could be downloaded [here](https://github.com/chinese-poetry/chinese-poetry/). The original poetry dataset is in `json/`, which include 260000 Song poems in total. Download the data and put it in `Poetry_Dataset/paragraphs/`. The level and oblique tones dataset in in `strains/json/`, which include the corresponding tones. Download the data and put it in `Poetry_Dataset/strains/`. Then run the code in `Poetry_Preprocess.ipynb` one by one. `poetry.txt`, `poetry_pos.txt`, `poetry_tone.txt` will be generated. These three files are the final files we need.
+- **Poetry Dataset Preparation:** The poetry dataset could be downloaded [here](https://github.com/chinese-poetry/chinese-poetry/). The original poetry dataset is in `json/`, which includes 260000 Song poems in total. Download the data and put it in `Poetry_Dataset/paragraphs/`. The level and oblique tones dataset in in `strains/json/`, which include the corresponding tones. Download the data and put it in `Poetry_Dataset/strains/`. Then run the code in `Poetry_Preprocess.ipynb` one by one. `poetry.txt`, `poetry_pos.txt`, `poetry_tone.txt` will be generated. These three files are the final files we need.
 
 <pre>
 Poetry_Dataset
@@ -95,7 +95,7 @@ In the above bash code, `-t` represents the data type of pretraining, `-t peotry
 parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 'poetry_pos', 'poetry_tone', 'random_music', 'music'])
 parser.add_argument("-n", "--exp_number", choices = ['0', '1', '2', '3', '4'])
 ```
-Please be attention that we do not set specific iteration number, you should stop the program by yourself.
+Please be attention that we do not set a specific iteration number, you should stop the program by yourself.
 
 - **Finetune** the model on Western music data. A simple run would be something like:
 
@@ -105,9 +105,9 @@ python fintune.py \
   -n 1
 ```
 
-Similar to the pretraining process, `-t` represents fintune on which pretrained model.  `-t peotry` represents fintune the model after pretraining on the Classical Chinese poetry data. `-n 1` represents the number of experiment is 1. After running the above bash code, the final models would be stored in `../Exp_1/poetry_fintune/`. All the possible options are the same as the pretraining process.
+Similar to the pretraining process, `-t` represents finetune on which pretrained model.  `-t peotry` represents finetune the model after pretraining on the Classical Chinese poetry data. `-n 1` represents the number of the experiment is 1. After running the above bash code, the final models would be stored in `../Exp_1/poetry_fintune/`. All the possible options are the same as the pretraining process.
 
-- **Test** the model on Western music data to computer the perplexity value. A simple run would be something like:
+- **Test** the model on Western music data to compute the perplexity value. A simple run would be something like:
 
 ```bash
 python test.py \
@@ -129,6 +129,6 @@ The loss curves of an experiment could be seen in the following (Green represent
 
 ![image](Fig/exp1.png)
 
-The perplexity values of four experiments could be seen in the following:
+The perplexity values of the four experiments could be seen in the following:
 
 ![image](Fig/exp_table.png)
