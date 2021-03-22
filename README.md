@@ -24,7 +24,7 @@ pip install tensorboardX 2.1
 * `pretrain.py`: Using data to pretrain the model. 
 * `fintune.py`: Using data to finetune the model.
 * `test.py`: Computing perplexity values to evaluate the model.
-* `data_pipeline.py`: Building data class and preparing data.
+* `data_pipeline.py`: Building data class and preprocessing data.
 * `GPT_Model.py`: Model used in this system.
 * `config.py`: Hyperparameters setting.
 
