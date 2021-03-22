@@ -28,6 +28,24 @@ pip install tensorboardX 2.1
 
 ## Data Preparation
 
+- **Poetry Dataset Preparation:** The poetry dataset could be downloaded [here](https://github.com/chinese-poetry/chinese-poetry/). The original poetry dataset is in `json/`, which include 260000 Song poems in total. The level and oblique tones dataset in in `strains/json/`, which include the corresponding tones. Put data in the following way, and then run the code in `Poetry_Preprocess.ipynb` one by one. `poetry.txt`, `poetry_pos.txt`, `poetry_tone.txt` will be generated. These three files are the final files we need.
+
+<pre>
+Poetry_Dataset
+├── paragraphs 
+│     └── poet.song.0.json
+│     └── ...
+│     └── poet.song.99000.json
+├── strains 
+│     └── poet.song.0.json
+│     └── ...
+│     └── poet.song.99000.json
+├── Poetry_Preprocess.ipynb
+├── poetry.txt
+├── poetry_pos.txt
+└── poetry_tone.txt
+</pre>
+
 ## Usage
 
 - **Pretrain** the model on different data. A simple run would be something like:
