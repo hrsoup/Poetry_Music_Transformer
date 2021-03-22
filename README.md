@@ -1,5 +1,7 @@
 # Poetry_Music_Transformer
 
+Analyzing music structure encoded in neural network models is a fundamental task in Music Information Retrieval (MIR). Existing work focuses on exploring the internal music structure. In this work, we propose a different approach: we analyze the music context structure embedded in neural network models based on both non-music data and music - measuring how much information a neural network model can capture when transferring from non-music data to music. Specifically, we pretrain Transformers on Classical Chinese poetry and then finetune them on Western music, finally evaluate their performance on Western music. We surprisingly find that pretraining on Classical Chinese poetry improves the testing performance on Western music, despite no overlap in surface vocabulary. To figure out what kinds of latent structure information behind Classical Chinese poetry lead to this improvement, we carry out two further experiments: one is pretraining on the level and oblique tones extracted from Classical Chinese poetry, the other is pretraining on the part-of-speech tags extracted from Classical Chinese poetry. Experiment results show that both of them contribute to the overall improvement, and the part-of-speech tags information contributes more. 
+
 ## Installation
 
 We use a single GPU (RTX 2080 Ti) to develop this system with:
@@ -28,7 +30,7 @@ pip install tensorboardX 2.1
 
 ## Data Preparation
 
-- **Poetry Dataset Preparation:** The poetry dataset could be downloaded [here](https://github.com/chinese-poetry/chinese-poetry/). The original poetry dataset is in `json/`, which include 260000 Song poems in total. The level and oblique tones dataset in in `strains/json/`, which include the corresponding tones. Put data in the following way, and then run the code in `Poetry_Preprocess.ipynb` one by one. `poetry.txt`, `poetry_pos.txt`, `poetry_tone.txt` will be generated. These three files are the final files we need.
+- **Poetry Dataset Preparation:** The poetry dataset could be downloaded [here](https://github.com/chinese-poetry/chinese-poetry/). The original poetry dataset is in `json/`, which include 260000 Song poems in total. Download the data and put it in `Poetry_Dataset/paragraphs/`. The level and oblique tones dataset in in `strains/json/`, which include the corresponding tones. Download the data and put it in `Poetry_Dataset/strains/`. Then run the code in `Poetry_Preprocess.ipynb` one by one. `poetry.txt`, `poetry_pos.txt`, `poetry_tone.txt` will be generated. These three files are the final files we need.
 
 <pre>
 Poetry_Dataset
@@ -62,6 +64,7 @@ In the above bash code, `-t` represents the data type of pretraining, `-t peotry
 parser.add_argument("-t", "--type", choices = ['random_poetry', 'poetry', 'poetry_pos', 'poetry_tone', 'random_music', 'music'])
 parser.add_argument("-n", "--exp_number", choices = ['0', '1', '2', '3', '4'])
 ```
+Please be attention that we do not set specific iteration number, you should stop the program by yourself.
 
 - **Finetune** the model on Western music data. A simple run would be something like:
 
@@ -90,3 +93,9 @@ tensorboard --logdir ./
 ```
 
 ## Results
+
+The loss curves of an experiment could be seen in the following:
+
+![image](https://github.com/hrsoup/Poetry_Music_Transformer/exp1.png)
+
+Green represents the baseline data, navy represents the tones data, light blue represents the pos data, and orange represents the original poetry data.
