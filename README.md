@@ -96,6 +96,6 @@ tensorboard --logdir ./
 
 The loss curves of an experiment could be seen in the following:
 
-![image](https://github.com/hrsoup/Poetry_Music_Transformer/Fig/exp1.png)
+![image](Fig/exp1.png)
 
 Green represents the baseline data, navy represents the tones data, light blue represents the pos data, and orange represents the original poetry data.
