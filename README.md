@@ -60,6 +60,7 @@ Music_Dataset
 
 Then, run the code in `Music_dataset_after_preprocess/Music_Preprocess.ipynb` one by one, the following files would be generated:
 
+<pre>
 Music_Dataset
 ├── train (967 MIDI files)
 │     └── ...
@@ -77,6 +78,7 @@ Music_Dataset
       └── 0.npz
       └── ...
       └── 966.npz
+</pre>
 
 Now, all the datasets are prepared! You can begin to enjoy this system!
 
