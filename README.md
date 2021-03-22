@@ -48,6 +48,8 @@ Poetry_Dataset
 └── poetry_tone.txt
 </pre>
 
+- **Music Dataset Preparation:** 
+
 ## Usage
 
 - **Pretrain** the model on different data. A simple run would be something like:
@@ -97,3 +99,7 @@ tensorboard --logdir ./
 The loss curves of an experiment could be seen in the following (Green represents the baseline data, navy represents the tones data, light blue represents the pos data, and orange represents the original poetry data):
 
 ![image](Fig/exp1.png)
+
+The perplexity values of four experiments could be seen in the following:
+
+![image](Fig/exp_table.png)
