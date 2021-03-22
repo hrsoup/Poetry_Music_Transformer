@@ -48,7 +48,37 @@ Poetry_Dataset
 └── poetry_tone.txt
 </pre>
 
-- **Music Dataset Preparation:** 
+- **Music Dataset Preparation:** The music dataset is MAESTRO V2.0.0, which could be seen [here](https://magenta.tensorflow.org/datasets/maestro). You can download `maestro-v2.0.0-midi.zip` and split training set and testing set using recommended labels by yourself, or just use the dataset we have split. The music dataset is organized in the following way:
+
+<pre>
+Music_Dataset
+├── train (967 MIDI files)
+│     └── ...
+└── test (178 MIDI files)
+      └── ...
+</pre>
+
+Then, run the code in `Music_dataset_after_preprocess/Music_Preprocess.ipynb` one by one, the following files would be generated:
+
+Music_Dataset
+├── train (967 MIDI files)
+│     └── ...
+└── test (178 MIDI files)
+│     └── ...
+├── random
+│     └── 0.npz
+│     └── ...
+│     └── 966.npz
+├── train
+│     └── 0.npz
+│     └── ...
+│     └── 966.npz
+└── test
+      └── 0.npz
+      └── ...
+      └── 966.npz
+
+Now, all the datasets are prepared! You can begin to enjoy this system!
 
 ## Usage
 
