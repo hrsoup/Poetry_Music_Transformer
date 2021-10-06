@@ -1,7 +1,5 @@
 # Poetry_Music_Transformer
 
-Analyzing music structure encoded in neural network models is a fundamental task in Music Information Retrieval (MIR). Existing work focuses on exploring the internal music structure. In this work, we propose a different approach: we analyze the music context structure embedded in neural network models based on both non-music data and music - measuring how much information a neural network model can capture when transferring from non-music data to music. Specifically, we pretrain Transformers on Classical Chinese poetry and then finetune them on Western music, finally evaluate their performance on Western music. We surprisingly find that pretraining on Classical Chinese poetry improves the testing performance on Western music, despite no overlap in surface vocabulary. To figure out what kinds of latent structure information behind Classical Chinese poetry lead to this improvement, we carry out two further experiments: one is pretraining on the level and oblique tones extracted from Classical Chinese poetry, the other is pretraining on the part-of-speech tags extracted from Classical Chinese poetry. Experiment results show that both of them contribute to the overall improvement, and the part-of-speech tags information contributes more. 
-
 ## Installation
 
 We use a single GPU (RTX 2080 Ti) to develop this system with:
